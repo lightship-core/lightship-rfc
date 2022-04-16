@@ -21,7 +21,7 @@ Example:
 ```json
 {
   "url": "https:\/\/example.com\/",
-  "durationInSeconds": "0.48",
+  "durationInSeconds": 0.48,
   "scores": {
     "seo": 100,
     "security": 50,
