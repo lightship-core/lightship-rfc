@@ -2,6 +2,12 @@
 
 The RFC all implementations can follow to facilitate porting.
 
+## Summary
+
+- [1. Response](#1-response)
+  - [1.1. Score](#11-score)
+  - [1.2. RuleResult](#12-ruleresult)
+
 ## 1. Response
 
 This is the top-level content in the response.
