@@ -94,6 +94,8 @@ interface RuleResult {
 
 Lightship implementations should be able to parse a configuration file to run the web crawler as an alternative to a code-driven execution.
 
+The default name cli-tools can seek for should be "lightship.json".
+
 ```ts
 interface Configuration {
   domains: Domain[],
