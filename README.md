@@ -7,6 +7,10 @@ The RFC all implementations can follow to facilitate porting.
 - [1. Response](#1-response)
   - [1.1. Score](#11-score)
   - [1.2. RuleResult](#12-ruleresult)
+- [2. Configuration file](#2-configuration-file)
+  - [2.1. Domain](#21-domain)
+  - [2.2. Route](#22-route)
+  - [2.3. Query](#23-query)
 
 ## 1. Response
 
@@ -83,5 +87,119 @@ Represents a rule and its result.
 interface RuleResult {
   name: string,
   passes: boolean
+}
+```
+
+## 2. Configuration file
+
+Lightship implementations should be able to parse a configuration file to run the web crawler as an alternative to a code-driven execution.
+
+```ts
+interface Configuration {
+  domains: Domain[],
+  routes: Route[]
+}
+```
+
+Example:
+
+```json
+{
+  "domains": [
+    {
+      "base": "https://example.com",
+      "routes": [
+        {
+          "path": "/"
+        },
+        {
+          "path": "/register"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "path": "https://news.google.com/topstories"
+    }
+  ]
+}
+```
+
+### 2.1. Domain
+
+Represent a base path to easily specify all the routes that share the same domain.
+
+```ts
+interface Domain {
+  base: string,
+  routes: Route[]
+}
+```
+
+Example:
+
+```json
+{
+  "base": "https://example.com",
+  "routes": [
+    {
+      "path": "/",
+    },
+    {
+      "path": "/register",
+      "queries": [
+        {
+          "key": "utm-source",
+          "value": "mailing"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### 2.2. Route
+
+The route represents either a relative path to a domain, or an absolute path (with the base).
+
+```ts
+interface Route {
+  path: string,
+  queries?: Query[]
+}
+```
+
+Example:
+
+```json
+{
+  "path": "/account",
+  "queries": [
+    {
+      "key": "theme",
+      "value": "dark"
+    }
+  ]
+}
+```
+
+### 2.3. Query
+
+Represent a query string.
+
+```ts
+interface Query {
+  key: string,
+  value: string
+}
+```
+
+Example:
+
+```json
+{
+  "key": "lang",
+  "value": "en"
 }
 ```
