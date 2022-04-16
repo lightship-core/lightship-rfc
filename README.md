@@ -11,6 +11,15 @@ The RFC all implementations can follow to facilitate porting.
   - [2.1. Domain](#21-domain)
   - [2.2. Route](#22-route)
   - [2.3. Query](#23-query)
+- [3. Rules](#3-rules)
+  - [3.1. SEO](#31-seo)
+    - [3.1.1. Title present](#311-title-present)
+    - [3.1.2. Lang present](#312-lang-present)
+  - [3.2. Security](#32-security)
+    - [3.2.1. Server header hidden](#321-server-header-hidden)
+    - [3.2.2. Strict-Transport-Security header present](#322-strict-transport-security-header-present)
+    - [3.2.3. X-Frame-Options header present](#323-x-frame-options-header-present)
+    - [3.2.4. X-Powered-By header hidden](#324-x-powered-by-header-hidden)
 
 ## 1. Response
 
@@ -205,3 +214,47 @@ Example:
   "value": "en"
 }
 ```
+
+## 3. Rules
+
+The list of rules classified by category.
+
+### 3.1. Seo
+
+#### 3.1.1. Title present
+
+Passes if the HTML title tag is present and filled.
+
+**Value**: 50
+
+#### 3.1.2. Lang present
+
+Passes if the lang attribute on the HTML html tag is present and filled.
+
+**Value**: 50
+
+### 3.2. Security
+
+#### 3.2.1. Server header hidden
+
+Passes if the "Server" header is not present or empty.
+
+**Value**: 25
+
+#### 3.2.2. Strict-Transport-Security header present
+
+Passes if the "Strict-Transport-Security" header is present and have a valid value.
+
+**Value**: 25
+
+#### 3.2.3. X-Frame-Options header present
+
+Passes if the "X-Frame-Options" header is present and have a valid value.
+
+**Value**: 25
+
+#### 3.2.4. X-Powered-By header hidden
+
+Passes if the "X-Powered-By" header is not present or empty.
+
+**Value**: 25
