@@ -15,11 +15,26 @@ The RFC all implementations can follow to facilitate porting.
   - [3.1. SEO](#31-seo)
     - [3.1.1. Title present](#311-title-present)
     - [3.1.2. Lang present](#312-lang-present)
+    - [3.1.3. Links define href](#313-links-define-href)
+    - [3.1.4. Meta description present](#314-meta-description-present)
   - [3.2. Security](#32-security)
     - [3.2.1. Server header hidden](#321-server-header-hidden)
     - [3.2.2. Strict-Transport-Security header present](#322-strict-transport-security-header-present)
     - [3.2.3. X-Frame-Options header present](#323-x-frame-options-header-present)
     - [3.2.4. X-Powered-By header hidden](#324-x-powered-by-header-hidden)
+  - [3.3. Performance](#33-performance)
+    - [3.3.1. Text compression enabled](#331-text-compression-enabled)
+    - [3.3.2. Fast response time](#332-fast-response-time)
+    - [3.3.3. No redirects](#333-no-redirects)
+    - [3.3.4. Uses HTTP/2](#334-uses-http2)
+  - [3.4. Accessibility](#34-accessibility)
+    - [3.4.1. Meta viewport present](#341-meta-viewport-present)
+    - [3.4.2. Use landmark tags](#342-use-landmark-tags)
+    - [3.4.3. Buttons and links use an accessible name](#343-buttons-and-links-use-an-accessible-name)
+    - [3.4.4. Ids are unique](#344-ids-are-unique)
+    - [3.4.5. Images have alt attributes](#345-images-have-alt-attributes)
+    - [3.4.6. Doctype html present](#346-doctype-html-present)
+    - [3.4.7. Meta theme color present](#347-meta-theme-color-present)
 
 ## 1. Response
 
@@ -44,6 +59,8 @@ Example:
   "scores": {
     "seo": 100,
     "security": 50,
+    "performance": 100,
+    "accessibility": 61
   },
   "seo": [
     {
@@ -64,6 +81,30 @@ Example:
       "name:" "xFrameOptionHeaderPresent",
       "passes": true
     }
+  ],
+  "performance": [
+    {
+      "name": "textCompressionEnabled",
+      "passes": true
+    },
+    {
+      "name": "fastResponseTime",
+      "passes": true,
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "metaViewportPresent",
+      "passes": true
+    },
+    {
+      "name:" "useLandmarkTags",
+      "passes": true
+    },
+    {
+      "name": "buttonsAndLinksHaveAccessibleName",
+      "passes": false
+    }
   ]
 }
 ```
@@ -75,7 +116,9 @@ Represents all the audits scores.
 ```ts
 interface Score {
   seo: number,
-  security: number
+  security: number,
+  performance: number,
+  accessibility: number
 }
 ```
 
@@ -84,7 +127,9 @@ Example:
 ```json
 {
   "seo": 100,
-  "security": 75
+  "security": 75,
+  "performance": 100,
+  "accessibility": 61
 }
 ```
 
@@ -225,13 +270,26 @@ The list of rules classified by category.
 
 Passes if the HTML title tag is present and filled.
 
-**Value**: 50
+**Value**: 25
 
 #### 3.1.2. Lang present
 
 Passes if the lang attribute on the HTML html tag is present and filled.
 
-**Value**: 50
+**Value**: 25
+
+#### 3.1.3. Links define href
+
+Passes if all "a" tags define a "href" attribute.
+
+**Value**: 25
+
+#### 3.1.4. Meta description present
+
+Passes if a `<meta name="description" />` tag is present.
+
+**Value**: 25
+
 
 ### 3.2. Security
 
@@ -258,3 +316,73 @@ Passes if the "X-Frame-Options" header is present and have a valid value.
 Passes if the "X-Powered-By" header is not present or empty.
 
 **Value**: 25
+
+### 3.3. Performance
+
+#### 3.3.1. Text compression enabled
+
+Passes if the "content-encoding" header is present and defines one of "br", "gzip" or "deflate" decompressions.
+
+**Value**: 25
+
+#### 3.3.2. Fast response time
+
+Passes if the response time is under a second.
+
+**Value**: 25
+
+#### 3.3.3. No redirects
+
+Passes if the response was not hidden behind a redirection.
+
+**Value**: 25
+
+#### 3.3.4. Uses HTTP/2
+
+Passes if the response was served through HTTP/2.
+
+**Value**: 25
+
+### 3.4. Accessibility
+
+#### 3.4.1. Meta viewport present
+
+Passes if the `<meta name="viewport" />` is present and has a valid value (either "width" or "initial-scale").
+
+**Value**: 12
+
+#### 3.4.2 Use landmark tags
+
+Passes if the response contains either "main", "header", "nav", or "footer" tag elements.
+
+**Value**: 12
+
+#### 3.4.3. Buttons and links use an accessible name
+
+Passes if all buttons and "a" tags have a text or define an "aria-label" attribute.
+
+**Value**: 13
+
+#### 3.4.4. Ids are unique
+
+Passes if no duplicate "id" attribute is found.
+
+**Value**: 13
+
+#### 3.4.5. Images have alt attributes
+
+Passes if all images have an "alt" attribute.
+
+**Value**: 12
+
+#### 3.4.6. doctype html present
+
+Passes if the "\<!DOCTYPE html\>" declaration is present.
+
+**Value**: 13
+
+#### 3.4.7. Meta theme color present
+
+Passes if the content contains a `<meta name="theme-color" />`.
+
+**Value**: 12
