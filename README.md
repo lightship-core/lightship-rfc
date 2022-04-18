@@ -95,7 +95,7 @@ Example:
   "accessibility": [
     {
       "name": "metaViewportPresent",
-      "passes": true
+      "passes": true,
     },
     {
       "name:" "useLandmarkTags",
@@ -103,7 +103,15 @@ Example:
     },
     {
       "name": "buttonsAndLinksHaveAccessibleName",
-      "passes": false
+      "passes": false,
+      "items": [
+        {
+          "identifier": "<button id=\"login\"></button>"
+        },
+        {
+          "identifier": "<a class=\"fa fas-home\"></a>"
+        }
+      ]
     }
   ]
 }
@@ -140,7 +148,28 @@ Represents a rule and its result.
 ```ts
 interface RuleResult {
   name: string,
-  passes: boolean
+  passes: boolean,
+  items?: Item[]
+}
+```
+
+### 1.3. Item
+
+Represents an item that failed to pass a rule.
+
+```ts
+interface Item {
+  identifier: string,
+  error?: string
+}
+```
+
+Example:
+
+```json
+{
+  "identifier": "<div id=\"item-12\"></div>",
+  "error": "Duplicated with <div id=\"item-12\" class=\"bg-warning d-none\"></div>"
 }
 ```
 
