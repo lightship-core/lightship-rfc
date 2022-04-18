@@ -8,6 +8,7 @@ The RFC all implementations can follow to facilitate porting.
   - [1.1. Report](#11-report)
   - [1.2. Score](#12-score)
   - [1.3. RuleResult](#13-ruleresult)
+  - [1.4. Item](#14-item)
 - [2. Configuration file](#2-configuration-file)
   - [2.1. Domain](#21-domain)
   - [2.2. Route](#22-route)
