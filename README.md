@@ -4,9 +4,10 @@ The RFC all implementations can follow to facilitate porting.
 
 ## Summary
 
-- [1. Response](#1-response)
-  - [1.1. Score](#11-score)
-  - [1.2. RuleResult](#12-ruleresult)
+- [1. Root](#1-root)
+  - [1.1. Report](#11-report)
+  - [1.2. Score](#12-score)
+  - [1.3. RuleResult](#13-ruleresult)
 - [2. Configuration file](#2-configuration-file)
   - [2.1. Domain](#21-domain)
   - [2.2. Route](#22-route)
@@ -36,12 +37,85 @@ The RFC all implementations can follow to facilitate porting.
     - [3.4.6. Doctype html present](#346-doctype-html-present)
     - [3.4.7. Meta theme color present](#347-meta-theme-color-present)
 
-## 1. Response
+## 1. Root
 
-This is the top-level content in the response.
+This is the top-level content in the report. This is an array of Report.
+
+Example:
+
+```json
+[
+  {
+    "url": "https:\/\/example.com\/",
+    "durationInSeconds": 0.48,
+    "scores": {
+      "seo": 100,
+      "security": 50,
+      "performance": 100,
+      "accessibility": 61
+    },
+    "seo": [
+      {
+        "name": "titlePresent",
+        "passes": true
+      },
+      {
+        "name": "langPresent",
+        "passes": true,
+      }
+    ],
+    "security": [
+      {
+        "name": "serverHeaderHidden",
+        "passes": false
+      },
+      {
+        "name:" "xFrameOptionHeaderPresent",
+        "passes": true
+      }
+    ],
+    "performance": [
+      {
+        "name": "textCompressionEnabled",
+        "passes": true
+      },
+      {
+        "name": "fastResponseTime",
+        "passes": true,
+      }
+    ],
+    "accessibility": [
+      {
+        "name": "metaViewportPresent",
+        "passes": true,
+      },
+      {
+        "name:" "useLandmarkTags",
+        "passes": true
+      },
+      {
+        "name": "buttonsAndLinksHaveAccessibleName",
+        "passes": false,
+        "items": [
+          {
+            "identifier": "<button id=\"login\"></button>"
+          },
+          {
+            "identifier": "<a class=\"fa fas-home\"></a>"
+          }
+        ]
+      }
+    ]
+  }
+]
+```
+
+### 1.1. Report
+
+A report is the summary of the analysis for a single page.
 
 ```ts
-interface Response {
+interface Report {
   url: string,
   durationInSeconds: number,
   scores: Score,
@@ -54,70 +128,70 @@ Example:
 
 ```json
 {
-  "url": "https:\/\/example.com\/",
-  "durationInSeconds": 0.48,
-  "scores": {
-    "seo": 100,
-    "security": 50,
-    "performance": 100,
-    "accessibility": 61
-  },
-  "seo": [
-    {
-      "name": "titlePresent",
-      "passes": true
+    "url": "https:\/\/example.com\/",
+    "durationInSeconds": 0.48,
+    "scores": {
+      "seo": 100,
+      "security": 50,
+      "performance": 100,
+      "accessibility": 61
     },
-    {
-      "name": "langPresent",
-      "passes": true,
-    }
-  ],
-  "security": [
-    {
-      "name": "serverHeaderHidden",
-      "passes": false
-    },
-    {
-      "name:" "xFrameOptionHeaderPresent",
-      "passes": true
-    }
-  ],
-  "performance": [
-    {
-      "name": "textCompressionEnabled",
-      "passes": true
-    },
-    {
-      "name": "fastResponseTime",
-      "passes": true,
-    }
-  ],
-  "accessibility": [
-    {
-      "name": "metaViewportPresent",
-      "passes": true,
-    },
-    {
-      "name:" "useLandmarkTags",
-      "passes": true
-    },
-    {
-      "name": "buttonsAndLinksHaveAccessibleName",
-      "passes": false,
-      "items": [
-        {
-          "identifier": "<button id=\"login\"></button>"
-        },
-        {
-          "identifier": "<a class=\"fa fas-home\"></a>"
-        }
-      ]
-    }
-  ]
-}
+    "seo": [
+      {
+        "name": "titlePresent",
+        "passes": true
+      },
+      {
+        "name": "langPresent",
+        "passes": true,
+      }
+    ],
+    "security": [
+      {
+        "name": "serverHeaderHidden",
+        "passes": false
+      },
+      {
+        "name:" "xFrameOptionHeaderPresent",
+        "passes": true
+      }
+    ],
+    "performance": [
+      {
+        "name": "textCompressionEnabled",
+        "passes": true
+      },
+      {
+        "name": "fastResponseTime",
+        "passes": true,
+      }
+    ],
+    "accessibility": [
+      {
+        "name": "metaViewportPresent",
+        "passes": true,
+      },
+      {
+        "name:" "useLandmarkTags",
+        "passes": true
+      },
+      {
+        "name": "buttonsAndLinksHaveAccessibleName",
+        "passes": false,
+        "items": [
+          {
+            "identifier": "<button id=\"login\"></button>"
+          },
+          {
+            "identifier": "<a class=\"fa fas-home\"></a>"
+          }
+        ]
+      }
+    ]
+  }
 ```
 
-### 1.1 Score
+### 1.2. Score
 
 Represents all the audits scores.
 
@@ -141,7 +215,7 @@ Example:
 }
 ```
 
-### 1.2. RuleResult
+### 1.3. RuleResult
 
 Represents a rule and its result.
 
@@ -153,7 +227,7 @@ interface RuleResult {
 }
 ```
 
-### 1.3. Item
+### 1.4. Item
 
 Represents an item that failed to pass a rule.
 
