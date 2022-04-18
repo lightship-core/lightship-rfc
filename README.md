@@ -68,7 +68,7 @@ Example:
       "passes": true
     },
     {
-      "name: "langPresent",
+      "name": "langPresent",
       "passes": true,
     }
   ],
