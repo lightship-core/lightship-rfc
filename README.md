@@ -453,40 +453,40 @@ Passes if the response was served through HTTP/2.
 
 Passes if the `<meta name="viewport" />` is present and has a valid value (either "width" or "initial-scale").
 
-**Value**: 12
+**Value**: 14
 
 #### 3.4.2 Use landmark tags
 
 Passes if the response contains either "main", "header", "nav", or "footer" tag elements.
 
-**Value**: 12
+**Value**: 14
 
 #### 3.4.3. Buttons and links use an accessible name
 
 Passes if all buttons and "a" tags have a text or define an "aria-label" attribute.
 
-**Value**: 13
+**Value**: 15
 
 #### 3.4.4. Ids are unique
 
 Passes if no duplicate "id" attribute is found.
 
-**Value**: 13
+**Value**: 15
 
 #### 3.4.5. Images have alt attributes
 
 Passes if all images have an "alt" attribute.
 
-**Value**: 12
+**Value**: 14
 
 #### 3.4.6. doctype html present
 
 Passes if the "\<!DOCTYPE html\>" declaration is present.
 
-**Value**: 13
+**Value**: 14
 
 #### 3.4.7. Meta theme color present
 
 Passes if the content contains a `<meta name="theme-color" />`.
 
-**Value**: 12
+**Value**: 14
